@@ -2,16 +2,16 @@ import { ThemedText } from '@/components/themed-text';
 import { useRouter } from 'expo-router';
 import { Button, StyleSheet, View } from 'react-native';
 
-export default function About() {
+export default function Home() {
   const router = useRouter();
 
   return (
     <View style={style.container}>
-      <ThemedText type="title">About</ThemedText>
+      <ThemedText type="title">Home</ThemedText>
       <Button
-        title="Go to the home."
+        title="Go to the about."
         onPress={() => {
-          router.push('/');
+          router.push('/about');
         }}
       ></Button>
     </View>
