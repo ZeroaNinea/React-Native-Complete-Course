@@ -22,6 +22,7 @@ export default function TabLayout() {
           headerStyle: { backgroundColor: 'cornflowerblue' },
           headerTintColor: 'white',
           animation: 'slide_from_right',
+          headerShown: false,
         }}
       >
         <Stack.Screen name="(tabs)" />
