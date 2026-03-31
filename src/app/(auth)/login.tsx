@@ -1,4 +1,5 @@
 import { ThemedText } from '@/components/themed-text';
+import { useRouter } from 'expo-router';
 import {
   StyleSheet,
   Text,
@@ -9,6 +10,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginScreen() {
+  const router = useRouter();
+
   return (
     <SafeAreaView edges={['top', 'bottom']}>
       <View style={styles.container}>
@@ -39,7 +42,10 @@ export default function LoginScreen() {
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.linkButton}>
+          <TouchableOpacity
+            style={styles.linkButton}
+            onPress={() => router.push('/signup')}
+          >
             <Text style={styles.linkButtonText}>
               Don't you have an account?{' '}
               <Text style={styles.linkButtonTextBold}>Sign Up</Text>
