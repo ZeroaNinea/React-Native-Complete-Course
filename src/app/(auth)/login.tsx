@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 export default function LoginScreen() {
   return (
     <View style={styles.container}>
-      <ThemedText type="title">Welcode Back</ThemedText>
+      <ThemedText type="title">Welcome Back</ThemedText>
     </View>
   );
 }

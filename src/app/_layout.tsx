@@ -21,10 +21,7 @@ export default function RootLayout() {
     if (!isAuth) {
       router.replace('/(auth)/login');
     } else {
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="(auth)" />
-      </Stack>;
+      router.replace('/(tabs)/home');
     }
   });
 
