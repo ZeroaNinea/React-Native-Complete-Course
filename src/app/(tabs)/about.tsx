@@ -9,15 +9,9 @@ export default function About() {
     <View style={style.container}>
       <ThemedText type="title">About</ThemedText>
       <Button
-        title="Go to the home."
+        title="Back to the index."
         onPress={() => {
-          router.push('/home');
-        }}
-      ></Button>
-      <Button
-        title="Go to the profile."
-        onPress={() => {
-          router.push('/profile');
+          router.push('/');
         }}
       ></Button>
     </View>

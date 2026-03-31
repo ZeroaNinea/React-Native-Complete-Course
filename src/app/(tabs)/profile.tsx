@@ -9,14 +9,10 @@ export default function Profile() {
     <View style={style.container}>
       <ThemedText type="title">Profile</ThemedText>
       <Button
-        title="Go to the home."
+        title="Back to the index."
         onPress={() => {
-          router.push('/home');
+          router.push('/');
         }}
-      ></Button>
-      <Button
-        title="Go to the about."
-        onPress={() => router.push('/about')}
       ></Button>
     </View>
   );
