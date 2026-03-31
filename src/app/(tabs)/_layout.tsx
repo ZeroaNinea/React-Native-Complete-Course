@@ -11,7 +11,7 @@ export default function TabsLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={24} color={color} />
+            <Ionicons name="home-outline" size={24} color={color} />
           ),
         }}
       />
@@ -20,7 +20,11 @@ export default function TabsLayout() {
         options={{
           title: 'About',
           tabBarIcon: ({ color }) => (
-            <Ionicons name="information-circle" size={24} color={color} />
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color={color}
+            />
           ),
         }}
       />
@@ -29,7 +33,7 @@ export default function TabsLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => (
-            <Ionicons name="person" size={24} color={color} />
+            <Ionicons name="person-outline" size={24} color={color} />
           ),
         }}
       />
