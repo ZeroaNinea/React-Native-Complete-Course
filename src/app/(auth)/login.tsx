@@ -40,8 +40,9 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.linkButton}>
-            <Text>
-              Don't you have an account? <Text>Sign Up</Text>
+            <Text style={styles.linkButtonText}>
+              Don't you have an account?{' '}
+              <Text style={styles.linkButtonTextBold}>Sign Up</Text>
             </Text>
           </TouchableOpacity>
         </View>
@@ -89,5 +90,12 @@ const styles = StyleSheet.create({
   },
   linkButton: {
     marginTop: 20,
+  },
+  linkButtonText: {
+    color: '#666',
+  },
+  linkButtonTextBold: {
+    color: '#666',
+    fontWeight: 'bold',
   },
 });
