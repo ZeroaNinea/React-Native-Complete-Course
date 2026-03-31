@@ -6,7 +6,9 @@ export default function LoginScreen() {
   return (
     <SafeAreaView edges={['top', 'bottom']}>
       <View style={styles.container}>
-        <ThemedText type="title">Welcome Back</ThemedText>
+        <ThemedText type="title" style={styles.title}>
+          Welcome Back
+        </ThemedText>
         <Text style={styles.subtitle}>Sign In to Continue</Text>
         <View style={styles.separator}></View>
         <View>
@@ -37,6 +39,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  title: {
+    marginTop: 20,
   },
   subtitle: {
     color: '#999',
