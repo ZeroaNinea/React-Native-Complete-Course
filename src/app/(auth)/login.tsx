@@ -1,5 +1,11 @@
 import { ThemedText } from '@/components/themed-text';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginScreen() {
@@ -28,6 +34,16 @@ export default function LoginScreen() {
             autoCapitalize="none"
             style={styles.textInput}
           />
+
+          <TouchableOpacity style={styles.button}>
+            <Text>Sign In</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.linkButton}>
+            <Text>
+              Don't you have an account <Text>Sign Up</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -60,5 +76,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: '#21bde4',
+    padding: 10,
+    borderRadius: 5,
+    color: '#fff',
+    alignItems: 'center',
+  },
+  linkButton: {
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#999',
   },
 });
