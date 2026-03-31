@@ -40,7 +40,7 @@ export default function HomeScreen() {
             Welcome to&nbsp;Expo
           </ThemedText>
           <Link style={styles.title} href={'/about'}>
-            <ThemedText type="link">Go to the about screen.</ThemedText>
+            <ThemedText type="linkPrimary">Go to the about screen.</ThemedText>
           </Link>
         </ThemedView>
 
