@@ -14,12 +14,12 @@ export default function Home() {
           router.push('/about');
         }}
       ></Button>
-      {/* <Button
+      <Button
         title="Go to the profile."
         onPress={() => {
           router.push('/profile');
         }}
-      ></Button> */}
+      ></Button>
     </View>
   );
 }

@@ -11,7 +11,13 @@ export default function About() {
       <Button
         title="Go to the home."
         onPress={() => {
-          router.push('/');
+          router.push('/home');
+        }}
+      ></Button>
+      <Button
+        title="Go to the profile."
+        onPress={() => {
+          router.push('/profile');
         }}
       ></Button>
     </View>

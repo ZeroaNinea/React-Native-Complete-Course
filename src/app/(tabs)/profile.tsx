@@ -11,7 +11,7 @@ export default function Profile() {
       <Button
         title="Go to the home."
         onPress={() => {
-          router.push('/');
+          router.push('/home');
         }}
       ></Button>
       <Button
