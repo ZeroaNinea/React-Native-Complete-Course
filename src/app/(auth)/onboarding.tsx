@@ -6,7 +6,7 @@ export default function Onboarding() {
     <View style={styles.container}>
       <ThemedText type="title">Onboarding</ThemedText>
       <Text style={styles.subtitle}>Sign Up to Get Started</Text>
-
+      <View style={styles.separator}></View>
       <View style={styles.form}>
         <TouchableOpacity style={styles.imageContainer}>
           <View style={styles.placeholderImage}>
@@ -32,8 +32,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: '#999',
-    fontSize: 20,
+    fontSize: 16,
     marginTop: 10,
+  },
+  separator: {
+    marginVertical: 30,
+    height: 1,
+    width: '80%',
   },
   form: {
     width: '100%',
@@ -56,8 +61,12 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
   },
   placeholderText: {
+    position: 'absolute',
     fontSize: 48,
     color: '#999',
+    top: '46%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   },
   editBadge: {
     position: 'absolute',
