@@ -1,13 +1,26 @@
-import supabase from '@/lib/supabase/client';
+import { getSupabase } from '@/lib/supabase/client';
 import { AuthContextType } from '@/types/auth-context-type';
 import { User } from '@/types/user';
 
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  let supabase: any;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    supabase = getSupabase();
+  }, []);
 
   const signIn = async (email: string, password: string) => {};
 
