@@ -1,7 +1,9 @@
 import { ThemedText } from '@/components/themed-text';
+import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -13,6 +15,31 @@ export default function Onboarding() {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status !== 'granted') {
+      Alert.alert(
+        'Permission Denied',
+        'You need camera roll permissions to select a profile image.',
+      );
+
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets[0]) {
+      setProfileImage(result.assets[0].uri);
+    }
+  };
 
   const handleComplete = () => {};
 
@@ -22,7 +49,7 @@ export default function Onboarding() {
       <Text style={styles.subtitle}>Add Your Information to Get Started</Text>
       <View style={styles.separator}></View>
       <View style={styles.form}>
-        <TouchableOpacity style={styles.imageContainer}>
+        <TouchableOpacity style={styles.imageContainer} onPress={pickImage}>
           <View style={styles.placeholderImage}>
             <Text style={styles.placeholderText}>+</Text>
           </View>
