@@ -25,10 +25,12 @@ export default function Signup() {
   const handleSignUp = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields.');
+      return;
     }
 
     if (password.length < 3) {
       Alert.alert('Error', 'Password must be at least 3 characters.');
+      return;
     }
 
     setIsLoading(true);
@@ -71,7 +73,11 @@ export default function Signup() {
             style={styles.textInput}
           />
 
-          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSignUp}
+            disabled={isLoading}
+          >
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
 
