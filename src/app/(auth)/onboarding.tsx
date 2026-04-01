@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { useState } from 'react';
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   TextInput,
@@ -11,6 +12,9 @@ import {
 export default function Onboarding() {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleComplete = () => {};
 
   return (
     <View style={styles.container}>
@@ -46,6 +50,14 @@ export default function Onboarding() {
         autoCapitalize="none"
         autoComplete="username"
       />
+
+      <TouchableOpacity style={styles.button} onPress={handleComplete}>
+        {isLoading ? (
+          <ActivityIndicator size={24} color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Complete Setup</Text>
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
@@ -118,5 +130,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: '#21bde4',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
   },
 });
