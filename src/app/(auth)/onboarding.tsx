@@ -4,6 +4,7 @@ import { useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -41,6 +42,21 @@ export default function Onboarding() {
     }
   };
 
+  const takePhoto = async () => {};
+
+  const showImagePicker = () => {
+    Alert.alert('Select Profile Image', 'Choose an option.', [
+      {
+        text: 'Camera',
+        onPress: takePhoto,
+      },
+      {
+        text: 'Photo Library',
+        onPress: pickImage,
+      },
+    ]);
+  };
+
   const handleComplete = () => {};
 
   return (
@@ -49,10 +65,17 @@ export default function Onboarding() {
       <Text style={styles.subtitle}>Add Your Information to Get Started</Text>
       <View style={styles.separator}></View>
       <View style={styles.form}>
-        <TouchableOpacity style={styles.imageContainer} onPress={pickImage}>
-          <View style={styles.placeholderImage}>
-            <Text style={styles.placeholderText}>+</Text>
-          </View>
+        <TouchableOpacity
+          style={styles.imageContainer}
+          onPress={showImagePicker}
+        >
+          {profileImage ? (
+            <Image source={{ uri: profileImage }} style={styles.profileImage} />
+          ) : (
+            <View style={styles.placeholderImage}>
+              <Text style={styles.placeholderText}>+</Text>
+            </View>
+          )}
           <View style={styles.editBadge}>
             <Text style={styles.editText}>Edit</Text>
           </View>
@@ -115,6 +138,12 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginBottom: 32,
     position: 'relative',
+  },
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: '#f5f5f5',
   },
   placeholderImage: {
     width: 120,
