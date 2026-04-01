@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: '#0274DF',
+    backgroundColor: '#21bde4',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    width: '50%',
+    width: '80%',
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
