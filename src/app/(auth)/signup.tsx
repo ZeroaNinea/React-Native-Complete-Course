@@ -1,7 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -42,6 +42,10 @@ export default function Signup() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    router.push('/(auth)/onboarding');
+  }, []);
 
   return (
     <SafeAreaView edges={['top', 'bottom']}>
