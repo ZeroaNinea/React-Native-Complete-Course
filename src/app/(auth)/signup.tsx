@@ -3,6 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   StyleSheet,
   Text,
@@ -15,12 +16,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { signUp } = useAuth();
 
   const router = useRouter();
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields.');
     }
@@ -29,8 +31,14 @@ export default function Signup() {
       Alert.alert('Error', 'Password must be at least 3 characters.');
     }
 
+    setIsLoading(true);
     try {
-    } catch (error) {}
+      await signUp(email, password);
+    } catch (error) {
+      Alert.alert('Error', 'Failed to sign up. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -73,7 +81,11 @@ export default function Signup() {
           >
             <Text style={styles.linkButtonText}>
               Already have an account?{' '}
-              <Text style={styles.linkButtonTextBold}>Sign In</Text>
+              {isLoading ? (
+                <ActivityIndicator size={24} color="#21bde4" />
+              ) : (
+                <Text style={styles.linkButtonTextBold}>Sign In</Text>
+              )}
             </Text>
           </TouchableOpacity>
         </View>
