@@ -5,7 +5,7 @@ export default function Onboarding() {
   return (
     <View style={styles.container}>
       <ThemedText type="title">Onboarding</ThemedText>
-      <Text style={styles.subtitle}>Sign Up to Get Started</Text>
+      <Text style={styles.subtitle}>Add Your Information to Get Started</Text>
       <View style={styles.separator}></View>
       <View style={styles.form}>
         <TouchableOpacity style={styles.imageContainer}>
