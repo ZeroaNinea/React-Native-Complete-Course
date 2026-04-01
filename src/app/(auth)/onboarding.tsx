@@ -54,6 +54,10 @@ export default function Onboarding() {
         text: 'Photo Library',
         onPress: pickImage,
       },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
     ]);
   };
 
