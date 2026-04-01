@@ -1,6 +1,9 @@
 import { ThemedText } from '@/components/themed-text';
+import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -10,7 +13,25 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Signup() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { signUp } = useAuth();
+
   const router = useRouter();
+
+  const handleSignUp = () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please fill in all fields.');
+    }
+
+    if (password.length < 3) {
+      Alert.alert('Error', 'Password must be at least 3 characters.');
+    }
+
+    try {
+    } catch (error) {}
+  };
 
   return (
     <SafeAreaView edges={['top', 'bottom']}>
@@ -27,6 +48,8 @@ export default function Signup() {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
             style={styles.textInput}
           />
           <TextInput
@@ -35,10 +58,12 @@ export default function Signup() {
             secureTextEntry
             autoComplete="password"
             autoCapitalize="none"
+            value={password}
+            onChangeText={setPassword}
             style={styles.textInput}
           />
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
 
