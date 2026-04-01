@@ -82,7 +82,7 @@ export default function Signup() {
             <Text style={styles.linkButtonText}>
               Already have an account?{' '}
               {isLoading ? (
-                <ActivityIndicator size={24} color="#21bde4" />
+                <ActivityIndicator size={24} color="#fff" />
               ) : (
                 <Text style={styles.linkButtonTextBold}>Sign In</Text>
               )}
