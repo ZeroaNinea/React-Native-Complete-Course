@@ -1,7 +1,17 @@
 import { ThemedText } from '@/components/themed-text';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function Onboarding() {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+
   return (
     <View style={styles.container}>
       <ThemedText type="title">Onboarding</ThemedText>
@@ -17,6 +27,25 @@ export default function Onboarding() {
           </View>
         </TouchableOpacity>
       </View>
+
+      <TextInput
+        style={styles.textInput}
+        placeholder="Full Name"
+        placeholderTextColor="#999"
+        value={name}
+        onChangeText={setName}
+        autoCapitalize="words"
+      />
+
+      <TextInput
+        style={styles.textInput}
+        placeholder="Username"
+        placeholderTextColor="#999"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+        autoComplete="username"
+      />
     </View>
   );
 }
@@ -81,5 +110,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
+  },
+  textInput: {
+    height: 40,
+    width: '80%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
 });
