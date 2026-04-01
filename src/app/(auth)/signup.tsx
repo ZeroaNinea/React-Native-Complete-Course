@@ -1,5 +1,5 @@
 import { ThemedText } from '@/components/themed-text';
-import { useAuth } from '@/context/AuthContext';
+// import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -18,7 +18,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const { signUp } = useAuth();
+  // const { signUp } = useAuth();
 
   const router = useRouter();
 
@@ -33,7 +33,7 @@ export default function Signup() {
 
     setIsLoading(true);
     try {
-      await signUp(email, password);
+      // await signUp(email, password);
     } catch (error) {
       Alert.alert('Error', 'Failed to sign up. Please try again.');
     } finally {
