@@ -42,7 +42,28 @@ export default function Onboarding() {
     }
   };
 
-  const takePhoto = async () => {};
+  const takePhoto = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (status !== 'granted') {
+      Alert.alert(
+        'Permission Denied',
+        'You need camera permissions to take a photo.',
+      );
+
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets[0]) {
+      setProfileImage(result.assets[0].uri);
+    }
+  };
 
   const showImagePicker = () => {
     Alert.alert('Select Profile Image', 'Choose an option.', [
