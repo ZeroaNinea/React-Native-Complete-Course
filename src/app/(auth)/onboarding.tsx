@@ -1,4 +1,5 @@
 import { ThemedText } from '@/components/themed-text';
+import { getSupabase } from '@/lib/supabase/client';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import {
@@ -82,7 +83,7 @@ export default function Onboarding() {
     ]);
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (!name || !username || !profileImage) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
@@ -95,6 +96,20 @@ export default function Onboarding() {
 
     setIsLoading(true);
     try {
+      // Check if username exists.
+      const { data: existingUser } = await getSupabase()
+        .from('profiles')
+        .select('id')
+        .eq('username', username);
+
+      if (existingUser) {
+        Alert.alert(
+          'Error',
+          'This username is already taken. Please choose another one.',
+        );
+        setIsLoading(false);
+        return;
+      }
     } catch (error) {
       Alert.alert('Error', 'Failed to sign up. Please try again.');
     } finally {
