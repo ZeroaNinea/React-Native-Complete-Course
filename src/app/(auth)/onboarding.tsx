@@ -82,7 +82,25 @@ export default function Onboarding() {
     ]);
   };
 
-  const handleComplete = () => {};
+  const handleComplete = () => {
+    if (!name || !username || !profileImage) {
+      Alert.alert('Error', 'Please fill in all fields.');
+      return;
+    }
+
+    if (username.length < 3) {
+      Alert.alert('Error', 'Username must be at least 3 characters.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+    } catch (error) {
+      Alert.alert('Error', 'Failed to sign up. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
