@@ -1,5 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
+import { useAuth } from '@/context/AuthContext';
 import { getSupabase } from '@/lib/supabase/client';
+import { uploadProfileImage } from '@/lib/supabase/storage';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import {
@@ -18,6 +20,7 @@ export default function Onboarding() {
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const { user } = useAuth();
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -96,11 +99,17 @@ export default function Onboarding() {
 
     setIsLoading(true);
     try {
+      if (!user) {
+        throw new Error('User is not authenticated.');
+      }
+
       // Check if username exists.
       const { data: existingUser } = await getSupabase()
         .from('profiles')
         .select('id')
-        .eq('username', username);
+        .eq('username', username)
+        .neq('id', user.id)
+        .single();
 
       if (existingUser) {
         Alert.alert(
@@ -109,6 +118,23 @@ export default function Onboarding() {
         );
         setIsLoading(false);
         return;
+      }
+
+      // Upload profile image.
+      let profileImageUrl: string | undefined;
+      if (profileImage) {
+        try {
+          profileImageUrl = await uploadProfileImage(
+            user?.id || '',
+            profileImage,
+          );
+        } catch (error) {
+          console.error('Error uploading profile image:', error);
+          Alert.alert(
+            'Warning',
+            'Failed to upload profile image. Continuing without image.',
+          );
+        }
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to sign up. Please try again.');
