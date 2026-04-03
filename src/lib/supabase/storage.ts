@@ -22,5 +22,8 @@ export const uploadProfileImage = async (userId: string, imageUri: string) => {
       .getPublicUrl(fileName);
 
     return urlData.publicUrl;
-  } catch (error) {}
+  } catch (error) {
+    console.error('Error uploading profile image:', error);
+    throw error;
+  }
 };
