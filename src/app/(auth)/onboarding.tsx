@@ -3,6 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { getSupabase } from '@/lib/supabase/client';
 import { uploadProfileImage } from '@/lib/supabase/storage';
 import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   ActivityIndicator,
@@ -20,7 +21,8 @@ export default function Onboarding() {
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
+  const router = useRouter();
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -136,6 +138,15 @@ export default function Onboarding() {
           );
         }
       }
+
+      // Update profile.
+      await updateUser({
+        name,
+        username,
+        profileImage: profileImageUrl,
+        onboardingCompleted: true,
+      });
+      router.replace('/(tabs)/home');
     } catch (error) {
       Alert.alert('Error', 'Failed to sign up. Please try again.');
     } finally {

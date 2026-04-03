@@ -30,8 +30,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateUser = async (userData: Partial<User>) => {
+    if (!user) return;
+
+    try {
+      const updateData: Partial<User> = {};
+
+      if (userData.name !== undefined) updateData.name = userData.name;
+      if (userData.username !== undefined)
+        updateData.username = userData.username;
+      if (userData.profileImage !== undefined)
+        updateData.profileImage = userData.profileImage;
+      if (userData.onboardingCompleted !== undefined)
+        updateData.onboardingCompleted = userData.onboardingCompleted;
+
+      const error = await getSupabase()
+        .from('profiles')
+        .update(updateData)
+        .eq('id', user.id);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, signUp }}>
+    <AuthContext.Provider value={{ user, signUp, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
