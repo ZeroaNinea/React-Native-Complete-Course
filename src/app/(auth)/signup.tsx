@@ -43,6 +43,7 @@ export default function Signup() {
       router.push('/(auth)/onboarding');
     } catch (error) {
       Alert.alert('Error', 'Failed to sign up. Please try again.');
+      console.error('Error signing up:', error);
     } finally {
       setIsLoading(false);
     }
