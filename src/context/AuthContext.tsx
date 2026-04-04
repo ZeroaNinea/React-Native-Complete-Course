@@ -107,7 +107,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (userData.onboardingCompleted !== undefined)
         updateData.onboardingCompleted = userData.onboardingCompleted;
 
-      const error = await getSupabase()
+      const { error } = await getSupabase()
         .from('profiles')
         .update(updateData)
         .eq('id', user.id);
