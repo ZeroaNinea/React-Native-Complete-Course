@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/themed-text';
 import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/hooks/use-theme';
 import { getSupabase } from '@/lib/supabase/client';
 import { uploadProfileImage } from '@/lib/supabase/storage';
 import * as ImagePicker from 'expo-image-picker';
@@ -23,6 +24,8 @@ export default function Onboarding() {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const { user, updateUser } = useAuth();
   const router = useRouter();
+
+  const theme = useTheme();
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -178,7 +181,7 @@ export default function Onboarding() {
       </View>
 
       <TextInput
-        style={styles.textInput}
+        style={[styles.textInput, { color: theme.text }]}
         placeholder="Full Name"
         placeholderTextColor="#999"
         value={name}
@@ -187,7 +190,7 @@ export default function Onboarding() {
       />
 
       <TextInput
-        style={styles.textInput}
+        style={[styles.textInput, { color: theme.text }]}
         placeholder="Username"
         placeholderTextColor="#999"
         value={username}
