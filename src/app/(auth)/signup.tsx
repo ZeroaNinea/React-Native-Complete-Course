@@ -88,7 +88,7 @@ export default function Signup() {
 
           <TouchableOpacity
             style={styles.linkButton}
-            onPress={() => router.push('/signup')}
+            onPress={() => router.push('/login')}
           >
             <Text style={styles.linkButtonText}>
               Already have an account?{' '}
