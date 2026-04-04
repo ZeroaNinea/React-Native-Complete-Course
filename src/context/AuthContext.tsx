@@ -65,9 +65,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (error) throw error;
 
     if (data.user) {
-      console.log('the data from context:', data);
-      const profile = await fetchUserProfile(data.user.id);
-      setUser(profile);
+      // console.log('the data from context:', data);
+      // const profile = await fetchUserProfile(data.user.id);
+      // setUser(profile);
+
+      if (data.user) {
+        const supabase = getSupabase();
+
+        // Create a user.
+        const { error: insertError } = await supabase.from('profiles').insert({
+          id: data.user.id,
+          name: '',
+          username: '',
+          user_image: '',
+          onboarding_completed: false,
+        });
+
+        if (insertError) {
+          console.error('Error creating profile:', insertError);
+          throw insertError;
+        }
+
+        // Fetch the user.
+        const profile = await fetchUserProfile(data.user.id);
+        setUser(profile);
+      }
     }
   };
 
