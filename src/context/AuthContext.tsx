@@ -16,44 +16,44 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   supabase = getSupabase();
   // }, []);
 
-  const fetchUserProfile = async (userId: string): Promise<User | null> => {
-    const supabase = getSupabase();
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
+  // const fetchUserProfile = async (userId: string): Promise<User | null> => {
+  //   const supabase = getSupabase();
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('profiles')
+  //       .select('*')
+  //       .eq('id', userId)
+  //       .single();
 
-      if (error) {
-        console.error('Error fetching profile:', error);
-        return null;
-      }
+  //     if (error) {
+  //       console.error('Error fetching profile:', error);
+  //       return null;
+  //     }
 
-      if (!data) {
-        console.error('No profile data returned.');
-        return null;
-      }
+  //     if (!data) {
+  //       console.error('No profile data returned.');
+  //       return null;
+  //     }
 
-      const authUser = await supabase.auth.getUser();
-      if (!authUser.data.user) {
-        console.error('No auth user found.');
-        return null;
-      }
+  //     const authUser = await supabase.auth.getUser();
+  //     if (!authUser.data.user) {
+  //       console.error('No auth user found.');
+  //       return null;
+  //     }
 
-      return {
-        id: data.id,
-        name: data.name,
-        username: data.username,
-        email: authUser.data.user.email || '',
-        profileImage: data.user_image,
-        onboardingCompleted: data.onboarding_completed,
-      };
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-      return null;
-    }
-  };
+  //     return {
+  //       id: data.id,
+  //       name: data.name,
+  //       username: data.username,
+  //       email: authUser.data.user.email || '',
+  //       profileImage: data.user_image,
+  //       onboardingCompleted: data.onboarding_completed,
+  //     };
+  //   } catch (error) {
+  //     console.error('Error fetching profile:', error);
+  //     return null;
+  //   }
+  // };
 
   const signIn = async (email: string, password: string) => {};
 
@@ -65,8 +65,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (error) throw error;
 
     if (data.user) {
-      const profile = await fetchUserProfile(data.user.id);
-      setUser(profile);
+      console.log('the data from context:', data);
+      // const profile = await fetchUserProfile(data.user.id);
+      // setUser(profile);
     }
   };
 
