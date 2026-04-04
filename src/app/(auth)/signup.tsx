@@ -23,6 +23,7 @@ export default function Signup() {
   const router = useRouter();
 
   const handleSignUp = async () => {
+    console.log('handle signup called');
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+    color: '#fff',
   },
   button: {
     marginTop: 20,
