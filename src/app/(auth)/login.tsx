@@ -1,4 +1,5 @@
 import { ThemedText } from '@/components/themed-text';
+import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import {
   StyleSheet,
@@ -10,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginScreen() {
+  const theme = useTheme();
   const router = useRouter();
 
   return (
@@ -27,7 +29,7 @@ export default function LoginScreen() {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
-            style={styles.textInput}
+            style={[styles.textInput, { color: theme.text }]}
           />
           <TextInput
             placeholder="Password..."
@@ -35,7 +37,7 @@ export default function LoginScreen() {
             secureTextEntry
             autoComplete="password"
             autoCapitalize="none"
-            style={styles.textInput}
+            style={[styles.textInput, { color: theme.text }]}
           />
 
           <TouchableOpacity style={styles.button}>

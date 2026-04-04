@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/themed-text';
 import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -14,6 +15,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Signup() {
+  const theme = useTheme();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +69,7 @@ export default function Signup() {
             autoCapitalize="none"
             value={email}
             onChangeText={setEmail}
-            style={styles.textInput}
+            style={[styles.textInput, { color: theme.text }]}
           />
           <TextInput
             placeholder="Password..."
@@ -76,7 +79,7 @@ export default function Signup() {
             autoCapitalize="none"
             value={password}
             onChangeText={setPassword}
-            style={styles.textInput}
+            style={[styles.textInput, { color: theme.text }]}
           />
 
           <TouchableOpacity
@@ -132,7 +135,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
-    color: '#fff',
   },
   button: {
     marginTop: 20,
