@@ -92,6 +92,7 @@ export default function Onboarding() {
   };
 
   const handleComplete = async () => {
+    console.log('handle complete called');
     if (!name || !username || !profileImage) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
