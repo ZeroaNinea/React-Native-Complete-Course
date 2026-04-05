@@ -75,30 +75,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (data.user) {
-      // console.log('the data from context:', data);
-      // const profile = await fetchUserProfile(data.user.id);
-      // setUser(profile);
-
-      const supabase = getSupabase();
-
-      supabase.auth.onAuthStateChange(async (event: string, session: any) => {
-        if (event === 'SIGNED_IN' && session?.user) {
-          // Create a user.async async
-          const { error } = await supabase.from('profiles').upsert({
-            id: data.user.id,
-            name: '',
-            username: '',
-            user_image: '',
-            onboarding_completed: false,
-          });
-
-          if (error) throw error;
-
-          // Fetch the user.
-          const profile = await fetchUserProfile(data.user.id);
-          setUser(profile);
-        }
-      });
+      const profile = await fetchUserProfile(data.user.id);
+      console.log('Profile fetched:', profile);
+      setUser(profile);
     }
   };
 
