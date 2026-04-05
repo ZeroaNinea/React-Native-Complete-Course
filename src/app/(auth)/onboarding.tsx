@@ -105,17 +105,32 @@ export default function Onboarding() {
 
     setIsLoading(true);
     try {
-      if (!user) {
+      // if (!user) {
+      //   throw new Error('User is not authenticated.');
+      // }
+
+      const {
+        data: { user: authUser },
+      } = await getSupabase().auth.getUser();
+
+      if (!authUser) {
         throw new Error('User is not authenticated.');
       }
 
       // Check if username exists.
-      const { data: existingUser } = await getSupabase()
+      const { data: existingUser, error } = await getSupabase()
         .from('profiles')
         .select('id')
         .eq('username', username)
-        .neq('id', user.id)
-        .single();
+        .neq('id', authUser.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error checking username:', error);
+        Alert.alert('Error', 'Failed to check username. Please try again.');
+        setIsLoading(false);
+        return;
+      }
 
       if (existingUser) {
         Alert.alert(
@@ -151,8 +166,9 @@ export default function Onboarding() {
         onboardingCompleted: true,
       });
       router.replace('/(tabs)/home');
-    } catch (error) {
-      Alert.alert('Error', 'Failed to sign up. Please try again.');
+    } catch (error: any) {
+      console.error('Onboarding error:', error);
+      Alert.alert('Error', error.message || 'Something went wrong.');
     } finally {
       setIsLoading(false);
     }

@@ -2,7 +2,13 @@ import { getSupabase } from '@/lib/supabase/client';
 import { AuthContextType } from '@/types/auth-context-type';
 import { User } from '@/types/user';
 
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -15,6 +21,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   //   supabase = getSupabase();
   // }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const {
+        data: { user },
+      } = await getSupabase().auth.getUser();
+
+      if (user) {
+        const profile = await fetchUserProfile(user.id);
+        setUser(profile);
+      }
+    };
+
+    init();
+  }, []);
 
   const fetchUserProfile = async (userId: string): Promise<User | null> => {
     const supabase = getSupabase();
