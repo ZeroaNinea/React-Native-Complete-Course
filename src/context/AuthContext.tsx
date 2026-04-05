@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const supabase = getSupabase();
 
         // Create a user.
-        const { error: insertError } = await supabase.from('profiles').insert({
+        const { error } = await supabase.from('profiles').upsert({
           id: data.user.id,
           name: '',
           username: '',
@@ -81,10 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           onboarding_completed: false,
         });
 
-        if (insertError) {
-          console.error('Error creating profile:', insertError);
-          throw insertError;
-        }
+        if (error) throw error;
 
         // Fetch the user.
         const profile = await fetchUserProfile(data.user.id);
