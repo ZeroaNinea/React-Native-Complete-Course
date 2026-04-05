@@ -75,7 +75,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (data.user) {
-      const profile = await fetchUserProfile(data.user.id);
+      // const profile = await fetchUserProfile(data.user.id);
+      // console.log('Profile fetched:', profile);
+      // setUser(profile);
+
+      const fetchWithRetry = async (userId: string, retries = 5) => {
+        for (let i = 0; i < retries; i++) {
+          const profile = await fetchUserProfile(userId);
+          if (profile) return profile;
+
+          await new Promise((res) => setTimeout(res, 300));
+        }
+
+        return null;
+      };
+
+      const profile = await fetchWithRetry(data.user.id);
       console.log('Profile fetched:', profile);
       setUser(profile);
     }
