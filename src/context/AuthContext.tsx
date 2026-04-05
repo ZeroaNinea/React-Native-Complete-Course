@@ -64,29 +64,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (error) throw error;
 
+    // Wait for the session.
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      console.log('No session yet, skipping profile creation');
+      return;
+    }
+
     if (data.user) {
       // console.log('the data from context:', data);
       // const profile = await fetchUserProfile(data.user.id);
       // setUser(profile);
 
-      if (data.user) {
-        const supabase = getSupabase();
+      const supabase = getSupabase();
 
-        // Create a user.
-        const { error } = await supabase.from('profiles').upsert({
-          id: data.user.id,
-          name: '',
-          username: '',
-          user_image: '',
-          onboarding_completed: false,
-        });
+      supabase.auth.onAuthStateChange(async (event: string, session: any) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+          // Create a user.async async
+          const { error } = await supabase.from('profiles').upsert({
+            id: data.user.id,
+            name: '',
+            username: '',
+            user_image: '',
+            onboarding_completed: false,
+          });
 
-        if (error) throw error;
+          if (error) throw error;
 
-        // Fetch the user.
-        const profile = await fetchUserProfile(data.user.id);
-        setUser(profile);
-      }
+          // Fetch the user.
+          const profile = await fetchUserProfile(data.user.id);
+          setUser(profile);
+        }
+      });
     }
   };
 
