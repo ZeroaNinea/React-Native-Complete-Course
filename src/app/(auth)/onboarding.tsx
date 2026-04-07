@@ -149,6 +149,7 @@ export default function Onboarding() {
           //   profileImage,
           // );
           const filePath = `${user?.id}/profile.jpg`;
+          console.log('Uploading to:', filePath);
 
           const { error } = await getSupabase()
             .storage.from('profiles')
