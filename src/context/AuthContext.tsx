@@ -22,6 +22,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   supabase = getSupabase();
   // }, []);
 
+  const checkSession = async () => {
+    try {
+      const {
+        data: { session },
+      } = await getSupabase().auth.getSession();
+
+      if (session) {
+        const profile = await fetchUserProfile(session.user.id);
+        setUser(profile);
+      }
+    } catch (error) {
+      console.error('Error checking session:', error);
+    }
+  };
+
+  useEffect(() => {
+    checkSession();
+  });
+
   useEffect(() => {
     const init = async () => {
       const {
