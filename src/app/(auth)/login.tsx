@@ -1,7 +1,10 @@
 import { ThemedText } from '@/components/themed-text';
+import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -13,6 +16,35 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function LoginScreen() {
   const theme = useTheme();
   const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { signIn } = useAuth();
+
+  const handleLogin = async () => {
+    console.log('handle signup called');
+    if (!email || !password) {
+      Alert.alert('Error', 'Please fill in all fields.');
+      return;
+    }
+
+    if (password.length < 3) {
+      Alert.alert('Error', 'Password must be at least 3 characters.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await signIn(email, password);
+      router.push('/(tabs)/home');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to sign up. Please try again.');
+      console.error('Error signing up:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView edges={['top', 'bottom']}>
@@ -29,6 +61,8 @@ export default function LoginScreen() {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
             style={[styles.textInput, { color: theme.text }]}
           />
           <TextInput
@@ -37,6 +71,8 @@ export default function LoginScreen() {
             secureTextEntry
             autoComplete="password"
             autoCapitalize="none"
+            value={password}
+            onChangeText={setPassword}
             style={[styles.textInput, { color: theme.text }]}
           />
 
