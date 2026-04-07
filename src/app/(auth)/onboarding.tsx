@@ -2,7 +2,6 @@ import { ThemedText } from '@/components/themed-text';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/hooks/use-theme';
 import { getSupabase } from '@/lib/supabase/client';
-import { uploadProfileImage } from '@/lib/supabase/storage';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -145,10 +144,19 @@ export default function Onboarding() {
       let profileImageUrl: string | undefined;
       if (profileImage) {
         try {
-          profileImageUrl = await uploadProfileImage(
-            user?.id || '',
-            profileImage,
-          );
+          // profileImageUrl = await uploadProfileImage(
+          //   user?.id || '',
+          //   profileImage,
+          // );
+          const filePath = `${user?.id}/profile.jpg`;
+
+          const { error } = await getSupabase()
+            .storage.from('profiles')
+            .upload(filePath, profileImage, {
+              upsert: true,
+            });
+
+          if (error) throw error;
         } catch (error) {
           console.error('Error uploading profile image:', error);
           Alert.alert(
