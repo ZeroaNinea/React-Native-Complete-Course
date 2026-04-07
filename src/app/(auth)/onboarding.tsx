@@ -144,20 +144,21 @@ export default function Onboarding() {
       let profileImageUrl: string | undefined;
       if (profileImage) {
         try {
-          // profileImageUrl = await uploadProfileImage(
-          //   user?.id || '',
-          //   profileImage,
-          // );
-          const filePath = `${user?.id}/profile.jpg`;
-          console.log('Uploading to:', filePath);
+          const filePath = `${authUser.id}/profile.jpg`;
+          const response = await fetch(profileImage);
+          const blob = await response.blob();
 
           const { error } = await getSupabase()
             .storage.from('profiles')
-            .upload(filePath, profileImage, {
+            .upload(filePath, blob, {
               upsert: true,
             });
 
-          console.log('Error uploading profile image:', error);
+          console.log('authUser.id:', authUser.id);
+          console.log('context user:', user);
+          console.log('Uploading to:', filePath);
+          console.log('profileImage:', profileImage);
+
           if (error) throw error;
         } catch (error) {
           console.error('Error uploading profile image:', error);
