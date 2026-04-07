@@ -4,6 +4,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   StyleSheet,
   Text,
@@ -29,17 +30,12 @@ export default function LoginScreen() {
       return;
     }
 
-    if (password.length < 3) {
-      Alert.alert('Error', 'Password must be at least 3 characters.');
-      return;
-    }
-
     setIsLoading(true);
     try {
       await signIn(email, password);
       router.push('/(tabs)/home');
     } catch (error) {
-      Alert.alert('Error', 'Failed to sign up. Please try again.');
+      Alert.alert('Error', 'Failed to sign in. Please try again.');
       console.error('Error signing up:', error);
     } finally {
       setIsLoading(false);
@@ -76,8 +72,12 @@ export default function LoginScreen() {
             style={[styles.textInput, { color: theme.text }]}
           />
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Sign In</Text>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            {isLoading ? (
+              <ActivityIndicator size={24} color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Sign In</Text>
+            )}
           </TouchableOpacity>
 
           <TouchableOpacity
