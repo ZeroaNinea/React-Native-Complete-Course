@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(profile);
       }
     } catch (error) {
+      setUser(null);
       console.error('Error checking session:', error);
       throw error;
     }
