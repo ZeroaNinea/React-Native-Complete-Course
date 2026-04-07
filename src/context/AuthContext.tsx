@@ -76,7 +76,47 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signIn = async (email: string, password: string) => {};
+  const signIn = async (email: string, password: string) => {
+    const supabase = getSupabase();
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+
+    // Wait for the session.
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      console.log('No session yet, skipping profile creation');
+      return;
+    }
+
+    if (data.user) {
+      // const profile = await fetchUserProfile(data.user.id);
+      // console.log('Profile fetched:', profile);
+      // setUser(profile);
+
+      const fetchWithRetry = async (userId: string, retries = 5) => {
+        for (let i = 0; i < retries; i++) {
+          const profile = await fetchUserProfile(userId);
+          if (profile) return profile;
+
+          await new Promise((res) => setTimeout(res, 300));
+        }
+
+        return null;
+      };
+
+      const profile = await fetchWithRetry(data.user.id);
+      console.log('Profile fetched:', profile);
+      setUser(profile);
+    }
+  };
 
   const signUp = async (email: string, password: string) => {
     const supabase = getSupabase();
@@ -145,7 +185,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, updateUser, fetchUserProfile }}
+      value={{ user, signUp, updateUser, fetchUserProfile, signIn }}
     >
       {children}
     </AuthContext.Provider>
