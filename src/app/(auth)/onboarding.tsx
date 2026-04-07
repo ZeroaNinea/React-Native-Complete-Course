@@ -157,6 +157,7 @@ export default function Onboarding() {
               upsert: true,
             });
 
+          console.log('Error uploading profile image:', error);
           if (error) throw error;
         } catch (error) {
           console.error('Error uploading profile image:', error);
