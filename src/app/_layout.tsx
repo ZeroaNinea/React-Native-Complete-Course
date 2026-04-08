@@ -3,7 +3,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useSegments } from 'expo-router';
 import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
@@ -32,16 +32,24 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const { user } = useAuth();
+  const segments = useSegments();
+
+  const inAuthGroup = segments[0] === '(auth)';
+  const inTabsGroup = segments[0] === '(tabs)';
 
   let isAuth = false;
 
   useEffect(() => {
     if (!isAuth) {
-      router.replace('/(auth)/login');
+      if (!inAuthGroup) {
+        router.replace('/(auth)/login');
+      }
     } else {
-      router.replace('/(tabs)/home');
+      if (!inTabsGroup) {
+        router.replace('/(tabs)/home');
+      }
     }
-  });
+  }, [user, segments, router]);
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
