@@ -12,6 +12,22 @@ import { AuthProvider, useAuth } from '@/context/AuthContext';
 // import { AnimatedSplashOverlay } from '@/components/animated-icon';
 // import AppTabs from '@/components/app-tabs';
 
+function RouteGuard() {
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: 'cornflowerblue' },
+        headerTintColor: 'white',
+        animation: 'slide_from_right',
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(auth)" />
+    </Stack>
+  );
+}
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
@@ -32,17 +48,7 @@ export default function RootLayout() {
       {/* <AnimatedSplashOverlay /> */}
       {/* <AppTabs /> */}
       <AuthProvider>
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: 'cornflowerblue' },
-            headerTintColor: 'white',
-            animation: 'slide_from_right',
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(auth)" />
-        </Stack>
+        <RouteGuard />
       </AuthProvider>
     </ThemeProvider>
   );
