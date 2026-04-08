@@ -7,7 +7,7 @@ import { Stack, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
-import { AuthProvider } from '@/context/AuthContext';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
 
 // import { AnimatedSplashOverlay } from '@/components/animated-icon';
 // import AppTabs from '@/components/app-tabs';
@@ -15,6 +15,7 @@ import { AuthProvider } from '@/context/AuthContext';
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
+  const { user } = useAuth();
 
   let isAuth = false;
 
